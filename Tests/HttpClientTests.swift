@@ -59,14 +59,18 @@ class HttpClientTests: XCTestCase {
     
     override class func setUp() {
         super.setUp()
-        removeContainers()
-        startContainers()
+        if !echoIsRunning {
+            removeContainers()
+            startContainers()
+        }
         Thread.sleep(forTimeInterval: 1)
     }
     
     override class func tearDown() {
         super.tearDown()
-        removeContainers()
+        if !echoIsRunning {
+            removeContainers()
+        }
     }
     
     static private func startContainers() {
@@ -85,8 +89,16 @@ class HttpClientTests: XCTestCase {
         ProcessInfo.processInfo.environment["TESTING_PORT"] ?? "9001"
     }
     
+    static private var testingHost: String {
+        ProcessInfo.processInfo.environment["TESTING_HOST"] ?? "localhost"
+    }
+    
+    static private var echoIsRunning: Bool {
+        ProcessInfo.processInfo.environment["ECHO_IS_RUNNING"] == "1"
+    }
+    
     static private var url: String {
-        return "http://localhost:\(testingPort)\(path)"
+        return "http://\(testingHost):\(testingPort)\(path)"
     }
     
     static private var path: String {
