@@ -15,8 +15,8 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps: 
       - checkout
-      - install_echo: "docker run --rm -d --name=http-echo -p 9001:80 mendhak/http-https-echo"
-      - test_client: "docker build -t swift-async-http ."  
+      - run: "docker run --rm -d --name=http-echo -p 9001:80 mendhak/http-https-echo"
+      - run: "docker build -t swift-async-http ."  
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
