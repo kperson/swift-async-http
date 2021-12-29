@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public enum HttpClientErrors: Error {
     
@@ -11,13 +14,16 @@ public class HttpClient {
     
     public let session: URLSession
     public let cachePolicy: URLRequest.CachePolicy?
+    public let timeoutInterval: TimeInterval?
     
     public init(
         session: URLSession = URLSession.shared,
-        cachePolicy: URLRequest.CachePolicy? = nil
+        cachePolicy: URLRequest.CachePolicy? = nil,
+        timeoutInterval: TimeInterval? = nil
     ) {
         self.session = session
         self.cachePolicy = cachePolicy
+        self.timeoutInterval = timeoutInterval
     }
     
     public func fetch(request: Request) async throws -> Response {
@@ -26,6 +32,15 @@ public class HttpClient {
         
         // request method
         urlRequest.httpMethod = request.method.rawValue
+        
+        // override the timeout if specified
+        if let t = request.timeoutInterval {
+            urlRequest.timeoutInterval = t
+        }
+        // use default timeout if provied and not overriden
+        else if let t = timeoutInterval {
+            urlRequest.timeoutInterval = t
+        }
         
         // override the cache policy if specified
         if let c = request.cachePolicy {
@@ -37,8 +52,8 @@ public class HttpClient {
         }
         
         // request body
-        if !request.body.isEmpty {
-            urlRequest.httpBody = request.body
+        if let b = request.body, !b.isEmpty {
+            urlRequest.httpBody = b
         }
         
         for (headerKey, headerValue) in request.headers {

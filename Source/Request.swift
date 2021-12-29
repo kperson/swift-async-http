@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 
 public enum RequestMethod : String {
@@ -21,18 +24,19 @@ public struct Request {
     public let method: RequestMethod
     public let url: String
     public let headers: [String : String]
-    public let body: Data
+    public let body: Data?
     public let cachePolicy: URLRequest.CachePolicy?
     public let session: URLSession?
-    
+    public let timeoutInterval: TimeInterval?
     
     public init(
         method: RequestMethod,
         url: String,
         headers: [String : String] = [:],
-        body: Data = Data(),
+        body: Data? = nil,
         cachePolicy: URLRequest.CachePolicy? = nil,
-        session: URLSession? = nil
+        session: URLSession? = nil,
+        timeoutInterval: TimeInterval? = nil
     ) {
         self.method = method
         self.url = url
@@ -40,6 +44,7 @@ public struct Request {
         self.body = body
         self.cachePolicy = cachePolicy
         self.session = session
+        self.timeoutInterval = timeoutInterval
     }
     
 }
