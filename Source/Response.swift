@@ -2,7 +2,7 @@ import Foundation
 
 public struct ResponseHeaders {
     
-    public let dict: [String : String]
+    private let dict: [String : String]
     
     public init(dict: [String : String]) {
         var lower: [String : String] = [:]
@@ -14,6 +14,10 @@ public struct ResponseHeaders {
     
     public subscript(field: String) -> String? {
         return dict[field.lowercased()]
+    }
+    
+    public var keys: [String] {
+        return dict.keys.sorted()
     }
     
 }

@@ -16,7 +16,15 @@ let package = Package(
         .target(
             name: "AsyncHttp",
             path: "./Source"
+        ),
+        .testTarget(
+            name: "AsyncHttpTests",
+            dependencies: [
+                "AsyncHttp"
+            ],
+            path: "./Tests"
         )
     ],
+    
     swiftLanguageVersions: [.v5]
 )

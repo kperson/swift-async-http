@@ -14,7 +14,7 @@ public class HttpClient {
     
     public init(
         session: URLSession = URLSession.shared,
-        cachePolicy: URLRequest.CachePolicy?
+        cachePolicy: URLRequest.CachePolicy? = nil
     ) {
         self.session = session
         self.cachePolicy = cachePolicy
@@ -61,7 +61,7 @@ public class HttpClient {
                     }
                     let response = Response(
                         statusCode: httpResponse.statusCode,
-                        body: data ?? Data() ,
+                        body: data ?? Data(),
                         headers: ResponseHeaders(dict: responseHeaders)
                     )
                     continuation.resume(returning: response)

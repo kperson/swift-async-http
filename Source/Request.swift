@@ -2,15 +2,15 @@ import Foundation
 
 
 public enum RequestMethod : String {
-    
-    case POST = "POST"
+
     case GET = "GET"
-    case DELETE = "DELETE"
-    case PUT = "PUT"
-    case OPTIONS = "OPTIONS"
-    case CONNECT = "CONNECT"
-    case TRACE = "TRACE"
     case HEAD = "HEAD"
+    case POST = "POST"
+    case PUT = "PUT"
+    case DELETE = "DELETE"
+    case CONNECT = "CONNECT"
+    case OPTIONS = "OPTIONS"
+    case TRACE = "TRACE"
     case PATCH = "PATCH"
     
 }
@@ -32,7 +32,7 @@ public struct Request {
         headers: [String : String] = [:],
         body: Data = Data(),
         cachePolicy: URLRequest.CachePolicy? = nil,
-        session: URLSession?
+        session: URLSession? = nil
     ) {
         self.method = method
         self.url = url
