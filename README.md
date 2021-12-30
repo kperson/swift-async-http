@@ -53,7 +53,3 @@ let request = builder.build()
 let response = try await client.fetch(request)
 print(response.statusCode)
 ```
-
-## TODO
- - add cocoapod support
- - add installation documentation
