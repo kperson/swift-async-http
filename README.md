@@ -41,3 +41,4 @@ print(response.statusCode)
 
 ## TODO
  - add cocoapod support
+ - add installation documentation
