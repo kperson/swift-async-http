@@ -6,7 +6,7 @@ import XCTest
 class RequestBuilderTests: XCTestCase {
     
     func testBuilderQueryParams() async throws {
-        let builder = RequestBuilder(method: .GET, urlStr: "http://localhost")
+        let builder = RequestBuilder(method: .GET, url: "http://localhost")
         builder.addQueryParam(name: "query", value: "test")
         let request = builder.build()
         XCTAssertEqual(request.url, "http://localhost?query=test")
@@ -14,7 +14,7 @@ class RequestBuilderTests: XCTestCase {
     }
     
     func testBuilderHeaders() async throws {
-        let builder = RequestBuilder(method: .GET, urlStr: "http://localhost")
+        let builder = RequestBuilder(method: .GET, url: "http://localhost")
         builder.addHeader(field: "k", value: "v")
         let request = builder.build()
         XCTAssertEqual(request.headers, ["k" : "v"])
@@ -23,7 +23,7 @@ class RequestBuilderTests: XCTestCase {
     
     func testBuilderBody() async throws {
         let body = "abc".data(using: .utf8)!
-        let builder = RequestBuilder(method: .POST, urlStr: "http://localhost")
+        let builder = RequestBuilder(method: .POST, url: "http://localhost")
         builder.body = body
         let request = builder.build()
         XCTAssertEqual(request.body, body)
@@ -31,7 +31,7 @@ class RequestBuilderTests: XCTestCase {
     }
     
     func testBuilderSettings() async throws {
-        let builder = RequestBuilder(method: .POST, urlStr: "http://localhost")
+        let builder = RequestBuilder(method: .POST, url: "http://localhost")
         builder.cachePolicy = .returnCacheDataElseLoad
         builder.timeoutInterval = 20
         let request = builder.build()

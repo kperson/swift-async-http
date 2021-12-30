@@ -16,9 +16,9 @@ public class RequestBuilder {
     public var session: URLSession?
     public var timeoutInterval: TimeInterval?
     
-    public init(method: RequestMethod, urlStr: String) {
+    public init(method: RequestMethod, url: String) {
         self.method = method
-        self.urlWithoutParams = urlStr
+        self.urlWithoutParams = url
     }
     
     public func addHeader(field: String, value: String) {
