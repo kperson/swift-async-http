@@ -36,6 +36,7 @@ let request = Request(
 
 let response = try await client.fetch(request)
 print(response.statusCode)
+print(headers["some_header"]) //NOTE: headers are case insenstive
 ```
 
 ## Request Builder
