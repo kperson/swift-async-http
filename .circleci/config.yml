@@ -15,8 +15,10 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps: 
       - checkout
-      - run: "docker run --rm -d --name=http-echo -p 9001:80 mendhak/http-https-echo"
-      - run: "docker build -t swift-async-http ."  
+      - run: "docker network create testing-network"
+      - run: "docker run --net testing-network --rm -d --name=httpecho mendhak/http-https-echo"
+      - run: "docker build -t swift-async-http ."
+      - run: "docker run --net testing-network --rm -e ECHO_IS_RUNNING=1 -e TESTING_HOST=httpecho -e TESTING_PORT=80 swift-async-http swift test"
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
