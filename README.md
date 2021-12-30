@@ -1,10 +1,10 @@
-## Swift Async Http
+# Swift Async Http
 
-[![CircleCI](https://circleci.com/gh/kperson/swift-async-http?style=svg)](https://circleci.com/gh/kperson/swift-async-http)
+**Swift Async Http is a basic async HTTP client that wraps URLSession and URLRequest.**
 
-Just a basic async http libary 
+[![CircleCI](https://circleci.com/gh/kperson/swift-async-http/tree/master.svg?style=svg)](https://circleci.com/gh/kperson/swift-async-http/?branch=master)
+
 
 ## TODO
  - add documentation
  - add cocoapod support
- - add travisci or circleci
