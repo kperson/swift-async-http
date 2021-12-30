@@ -1,8 +1,23 @@
 # Swift Async Http
 
-**Swift Async Http is a basic async HTTP client that wraps URLSession and URLRequest.**
+**Swift Async Http is a basic async HTTP client that wraps URLSession and URLRequest.
+This client works with iOS, tvOS, macOS, watchOS, and Linux.**
+
 
 [![CircleCI](https://circleci.com/gh/kperson/swift-async-http/tree/master.svg?style=svg)](https://circleci.com/gh/kperson/swift-async-http/?branch=master)
+
+## Cocoapod Installation
+Add the following to your Podfile.
+```
+pod 'AsyncHttp'
+```
+
+## Swift Package Installation
+Add the following to your Package.
+```
+.package(url: "https://github.com/kperson/swift-async-http.git", .upToNextMajor(from: "1.0.0"))
+```
+
 
 ## Basic Usuage
 ```swift
