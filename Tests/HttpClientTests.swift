@@ -112,10 +112,8 @@ class HttpClientTests: XCTestCase {
         task.standardOutput = pipe
         task.standardError = pipe
         task.arguments = ["-c", command]
-        task.launchPath = "/bin/bash"
-        task.launch()
-        
-        
+        task.executableURL = URL(fileURLWithPath: "/bin/bash")
+        try! task.run()
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)!
         task.waitUntilExit()
