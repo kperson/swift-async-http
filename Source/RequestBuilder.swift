@@ -21,17 +21,33 @@ public class RequestBuilder {
         self.urlWithoutParams = url
     }
     
-    public func addHeader(field: String, value: String) {
+    @discardableResult public func addHeader(field: String, value: String) -> RequestBuilder {
         headers[field] = value
+        return self
     }
     
-    public func addQueryParam(name: String, value: String?) {
+    @discardableResult public func addHeaders(fieldValues: [String : String]) -> RequestBuilder {
+        for (f, v) in fieldValues {
+            _ = addHeader(field: f, value: v)
+        }
+        return self
+    }
+    
+    @discardableResult public func addQueryParam(name: String, value: String?) -> RequestBuilder {
         queryParams.append(URLQueryItem(name: name, value: value))
+        return self
+    }
+    
+    @discardableResult public func addQueryParams(nameValues: [String : String?]) -> RequestBuilder {
+        for (n, v) in nameValues {
+            _ = addQueryParam(name: n, value: v)
+        }
+        return self
     }
 
     public var url: URL {
         var urlComps = URLComponents(string: urlWithoutParams)
-        urlComps?.queryItems = queryParams
+        urlComps?.queryItems = queryParams.sorted { a, b in a.name < b.name }
         return urlComps?.url ?? URL(string: urlWithoutParams)!
     }
     
