@@ -13,11 +13,27 @@ class RequestBuilderTests: XCTestCase {
         XCTAssertEqual(request.method, .GET)
     }
     
+    func testBuilderQueryParamsBulk() async throws {
+        let builder = RequestBuilder(method: .GET, url: "http://localhost")
+        _ = builder.addQueryParams(nameValues: ["query": "test", "query2": "test2"])
+        let request = builder.build()
+        XCTAssertEqual(request.url, "http://localhost?query=test&query2=test2")
+        XCTAssertEqual(request.method, .GET)
+    }
+    
     func testBuilderHeaders() async throws {
         let builder = RequestBuilder(method: .GET, url: "http://localhost")
         builder.addHeader(field: "k", value: "v")
         let request = builder.build()
-        XCTAssertEqual(request.headers, ["k" : "v"])
+        XCTAssertEqual(request.headers, ["k": "v"])
+        XCTAssertEqual(request.method, .GET)
+    }
+    
+    func testBuilderHeadersBulk() async throws {
+        let builder = RequestBuilder(method: .GET, url: "http://localhost")
+        builder.addHeaders(fieldValues: ["k": "v", "k2": "v2"])
+        let request = builder.build()
+        XCTAssertEqual(request.headers, ["k": "v", "k2": "v2"])
         XCTAssertEqual(request.method, .GET)
     }
     
