@@ -19,7 +19,11 @@ pod 'AsyncHttp'
 ## Swift Package Installation
 Add the following to your Package.
 ```
-.package(url: "https://github.com/kperson/swift-async-http.git", .upToNextMajor(from: "1.0.0"))
+# Package Dependency
+.package(url: "https://github.com/kperson/swift-async-http.git", .upToNextMajor(from: "1.0.1"))
+
+# Target Dependency
+.product(name: "AsyncHttp", package: "swift-async-http")
 ```
 
 
