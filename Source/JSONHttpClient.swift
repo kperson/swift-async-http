@@ -77,7 +77,7 @@ public struct HttpFailure: Error {
     
 }
 
-public class JSONHttpClient {
+open class JSONHttpClient {
         
     public static let sharedHttpClient = HttpClient()
     public let httpClient: HttpClient

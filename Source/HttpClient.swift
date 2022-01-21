@@ -10,7 +10,7 @@ public enum HttpClientErrors: Error {
     
 }
 
-public class HttpClient {
+open class HttpClient {
     
     public let session: URLSession
     public let cachePolicy: URLRequest.CachePolicy?

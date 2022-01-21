@@ -21,7 +21,7 @@ Add the following to your Package.
 
 Package Dependency
 ```
-.package(url: "https://github.com/kperson/swift-async-http.git", .upToNextMajor(from: "1.1.0"))
+.package(url: "https://github.com/kperson/swift-async-http.git", .upToNextMajor(from: "1.1.1"))
 ```
 
 Target Dependency
