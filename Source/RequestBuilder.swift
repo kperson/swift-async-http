@@ -44,10 +44,22 @@ public class RequestBuilder {
         }
         return self
     }
+    
+    @discardableResult public func setBody(body: Data) -> RequestBuilder {
+        self.body = body
+        return self
+    }
+    
+    @discardableResult public func setBody(body: String, encoding: String.Encoding = .utf8) -> RequestBuilder {
+        self.body = body.data(using: encoding)
+        return self
+    }
 
     public var url: URL {
         var urlComps = URLComponents(string: urlWithoutParams)
-        urlComps?.queryItems = queryParams.sorted { a, b in a.name < b.name }
+        if !queryParams.isEmpty {
+            urlComps?.queryItems = queryParams.sorted { a, b in a.name < b.name }
+        }
         return urlComps?.url ?? URL(string: urlWithoutParams)!
     }
     

@@ -2,16 +2,8 @@ import Foundation
 import XCTest
 @testable import AsyncHttp
 
-struct EchoResponse: Codable {
-    
-    let path: String
-    let headers: [String : String]
-    let method: String
-    let body: String
-    
-}
 
-class HttpClientTests: XCTestCase {
+class HttpClientTests: RequestTestCase {
     
     let headerKey = "hELlO"
     let headerValue = "world"
@@ -57,68 +49,12 @@ class HttpClientTests: XCTestCase {
         }
     }
     
-    override class func setUp() {
-        super.setUp()
-        if !echoIsRunning {
-            removeContainers()
-            startContainers()
-        }
-        Thread.sleep(forTimeInterval: 1)
-    }
-    
-    override class func tearDown() {
-        super.tearDown()
-        if !echoIsRunning {
-            removeContainers()
-        }
-    }
-    
-    static private func startContainers() {
-        shell("\(docker) run --rm -d --name=http-echo -p \(testingPort):80 mendhak/http-https-echo")
-    }
-    
-    static private func removeContainers() {
-        shell("\(docker) rm -f http-echo")
-    }
-        
-    static private var docker: String {
-        ProcessInfo.processInfo.environment["DOCKER_EXECUTABLE"] ?? "/usr/local/bin/docker"
-    }
-    
-    static private var testingPort: String {
-        ProcessInfo.processInfo.environment["TESTING_PORT"] ?? "9001"
-    }
-    
-    static private var testingHost: String {
-        ProcessInfo.processInfo.environment["TESTING_HOST"] ?? "localhost"
-    }
-    
-    static private var echoIsRunning: Bool {
-        ProcessInfo.processInfo.environment["ECHO_IS_RUNNING"] == "1"
-    }
-    
     static private var url: String {
         return "http://\(testingHost):\(testingPort)\(path)"
     }
-    
+
     static private var path: String {
         return "/my-path"
-    }
-    
-    @discardableResult private static func shell(_ command: String, traceId: String? = nil) -> (Bool, String) {
-        let task = Process()
-        let pipe = Pipe()
-        
-        task.standardOutput = pipe
-        task.standardError = pipe
-        task.arguments = ["-c", command]
-        task.executableURL = URL(fileURLWithPath: "/bin/bash")
-        try! task.run()
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8)!
-        task.waitUntilExit()
-        let exitStatus = task.terminationStatus
-        return (exitStatus == 0, output)
     }
     
 }

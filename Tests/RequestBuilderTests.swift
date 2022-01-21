@@ -55,4 +55,11 @@ class RequestBuilderTests: XCTestCase {
         XCTAssertEqual(request.cachePolicy, .returnCacheDataElseLoad)
     }
     
+    func testSetBody() async throws {
+        let builder = RequestBuilder(method: .POST, url: "http://localhost")
+        builder.setBody(body: "hello")
+        let request = builder.build()
+        XCTAssertEqual(request.body, "hello".data(using: .utf8))
+    }
+    
 }

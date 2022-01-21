@@ -30,8 +30,8 @@ public struct Response {
         
     public init(
         statusCode: Int,
-        body: Data,
-        headers: ResponseHeaders
+        body: Data = Data(),
+        headers: ResponseHeaders = .init(dict: [:])
     ) {
         self.statusCode = statusCode
         self.body = body
