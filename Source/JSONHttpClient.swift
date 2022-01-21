@@ -161,7 +161,7 @@ open class JSONHttpClient {
         headers: [String : String] = [:],
         body: Data
     ) async throws -> JSONResponse {
-        return try await fetch(method: .POST, path: path, queryParams: queryParams, headers: headers, body: body)
+        return try await fetch(method: .POST, path: path, queryParams: queryParams, headers: headers, body: body, addContentType: false)
     }
     
     public func deleteData(
@@ -170,7 +170,7 @@ open class JSONHttpClient {
         headers: [String : String] = [:],
         body: Data
     ) async throws -> JSONResponse {
-        return try await fetch(method: .DELETE, path: path, queryParams: queryParams, headers: headers, body: body)
+        return try await fetch(method: .DELETE, path: path, queryParams: queryParams, headers: headers, body: body, addContentType: false)
     }
     
     public func putData(
@@ -179,7 +179,7 @@ open class JSONHttpClient {
         headers: [String : String] = [:],
         body: Data
     ) async throws -> JSONResponse {
-        return try await fetch(method: .PUT, path: path, queryParams: queryParams, headers: headers, body: body)
+        return try await fetch(method: .PUT, path: path, queryParams: queryParams, headers: headers, body: body, addContentType: false)
     }
     
     public func patchData(
@@ -188,7 +188,7 @@ open class JSONHttpClient {
         headers: [String : String] = [:],
         body: Data
     ) async throws -> JSONResponse {
-        return try await fetch(method: .PATCH, path: path, queryParams: queryParams, headers: headers, body: body)
+        return try await fetch(method: .PATCH, path: path, queryParams: queryParams, headers: headers, body: body, addContentType: false)
     }
     
     public func post(
@@ -228,10 +228,11 @@ open class JSONHttpClient {
         path: String,
         queryParams: [String : String?] = [:],
         headers: [String : String] = [:],
-        body: Data = Data()
+        body: Data = Data(),
+        addContentType: Bool = true
     ) async throws -> JSONResponse {
         var hs = headers
-        if !body.isEmpty {
+        if !body.isEmpty && addContentType {
             hs["Content-Type"] = "application/json"
         }
         let builder = RequestBuilder(method: method, url: fullURL(path: path))

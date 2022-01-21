@@ -36,7 +36,7 @@ class JSONHttpClientTests: RequestTestCase {
         
         res = try await client.postData(path: path, queryParams: queryParams, headers: headers, body: samplePayloadData)
         echo = try res.extract(type: EchoResponse.self)
-        checkBodyResponse(method: .POST, echo: echo, hasBody: true)
+        checkBodyResponse(method: .POST, echo: echo, hasBody: true, checkContentType: false)
         
         res = try await client.post(path: path, queryParams: queryParams, headers: headers)
         echo = try res.extract(type: EchoResponse.self)
@@ -50,7 +50,7 @@ class JSONHttpClientTests: RequestTestCase {
         
         res = try await client.deleteData(path: path, queryParams: queryParams, headers: headers, body: samplePayloadData)
         echo = try res.extract(type: EchoResponse.self)
-        checkBodyResponse(method: .DELETE, echo: echo, hasBody: true)
+        checkBodyResponse(method: .DELETE, echo: echo, hasBody: true, checkContentType: false)
         
         res = try await client.delete(path: path, queryParams: queryParams, headers: headers)
         echo = try res.extract(type: EchoResponse.self)
@@ -64,7 +64,7 @@ class JSONHttpClientTests: RequestTestCase {
         
         res = try await client.putData(path: path, queryParams: queryParams, headers: headers, body: samplePayloadData)
         echo = try res.extract(type: EchoResponse.self)
-        checkBodyResponse(method: .PUT, echo: echo, hasBody: true)
+        checkBodyResponse(method: .PUT, echo: echo, hasBody: true, checkContentType: false)
         
         res = try await client.put(path: path, queryParams: queryParams, headers: headers)
         echo = try res.extract(type: EchoResponse.self)
@@ -78,7 +78,7 @@ class JSONHttpClientTests: RequestTestCase {
         
         res = try await client.patchData(path: path, queryParams: queryParams, headers: headers, body: samplePayloadData)
         echo = try res.extract(type: EchoResponse.self)
-        checkBodyResponse(method: .PATCH, echo: echo, hasBody: true)
+        checkBodyResponse(method: .PATCH, echo: echo, hasBody: true, checkContentType: false)
         
         res = try await client.patch(path: path, queryParams: queryParams, headers: headers)
         echo = try res.extract(type: EchoResponse.self)
@@ -125,10 +125,13 @@ class JSONHttpClientTests: RequestTestCase {
         XCTAssertEqual(res, samplePayload)
     }
     
-    private func checkBodyResponse(method: RequestMethod, echo: EchoResponse, hasBody: Bool) {
+    private func checkBodyResponse(method: RequestMethod, echo: EchoResponse, hasBody: Bool, checkContentType: Bool = true) {
         let expectedHeaders = [
             "x-my-key": "some-key"
         ]
+        if !echo.body.isEmpty && checkContentType {
+            XCTAssertEqual(echo.headers["content-type"], "application/json")
+        }
         let echoHeaders = ["x-my-key": echo.headers["x-my-key"]!]
         let expected = EchoResponse(
             path: "/my/json/path",
